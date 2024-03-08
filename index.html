@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online Store</title>
   <style>
-        body {
+    body {
       font-family: Arial, sans-serif;
-      margin: 0;
+       margin: 0;
       padding: 0;
       background-color: #f4f4f4;
     }
@@ -49,6 +49,7 @@
     .product img {
       width: 100%;
       max-height: 250px;
+      justify-content: space-between;
       border: 1px solid #ddd;
       border-radius: 4px;
       object-fit: cover;
@@ -147,11 +148,6 @@
       right: 5px;
       font-size: 16px;
       cursor: pointer;
-    }
-
-    label {
-      display: inline-block;
-      margin-bottom: 10px;
     }
 
     input {
@@ -372,13 +368,7 @@
       margin-bottom: 15px;
     }
 
-    #signUp label {
-      margin-bottom: 5px;
-    }
 
-    #login label {
-      margin-bottom: 5px;
-    }
 
     #signUp input {
       padding: 8px;
@@ -498,35 +488,31 @@
       object-fit: cover;
     }
 
-    #womenClothingsSection {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    #womenClothesSection {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      z-index: 999; /* Set a high z-index to ensure it's on top of other elements */
+      gap: 3px;
+      margin-left: 25px;
+      width: 100%;
+      background-color: #f2f2f2;
+      z-index: 999;
       overflow-y: auto;
     }
 
-    #womenClothesSection .productCate {
+    #womenClothesSection .womenproduct {
       background-color: rgb(141, 175, 164);
-      width: calc(50% - 20px); /* 33.33% width with 20px gap */
+      width: calc(33.33% - 20px); /* 33.33% width with 20px gap */
       flex-grow: 0;
       box-sizing: border-box;
       margin-bottom: 0;
       padding: 10px 10px;
     }
 
-    #womenClothesSection .productCate img {
+    #womenClothesSection .womenproduct img {
       width: 100%;
       max-height: 250px;
       border: 1px solid #ddd;
-      border-radius: 4px;
+      border-radius: 25px;
       object-fit: cover;
     }
 
@@ -539,6 +525,68 @@
       right: 25px;
       z-index: 1000;
     }
+    #closeWomenClothes:hover {
+       color: red;
+    }
+
+    .footer {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .contact-left{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .footer a { 
+      color: inherit;
+      text-decoration: none;
+    }
+    .footer__link {
+      font-weight: var(--fw-bold);
+    }
+    .footer__link:hover,
+    .social-list__link:hover {
+      opacity: .7;
+    }
+    .footer__link:hover {
+      text-decoration: underline;
+    }
+
+    .contact-left textarea {
+	    height: 140px;
+	    padding-bottom: 15px;
+	    border-radius: 20px;
+    }
+
+    .contact-inputs {
+	    width: 400px;
+	    height: 45px;
+	    border: none;
+	    outline: none;
+	    padding-left: 20px;
+	    font-weight: 400;
+	    color: grey;
+	    border-radius: 50px;
+    }
+
+    #closeContact {
+      cursor: pointer;
+      font-size: 30px;
+      z-index: 1000;
+    }
+
+    #closeContact:hover {
+      color: red;
+    }
 
   </style>
 </head>
@@ -550,6 +598,7 @@
         <button><a href="#" onclick="showSettings()">Settings</a></button>
         <button><a href="#" onclick="showSignUp()">Sign Up</a></button>
         <button><a href="#" onclick="showLogin()">Login</a></button>
+        <button><a href="#" onclick="showContactUs()">Contact Us</a></button>
       </div>
   <header>
     <video autoplay muted loop id="headerVideo">
@@ -595,21 +644,21 @@
       <button onclick="addToCart('Adidas', 700.00, 'images/sneaker.jpg')">Add to Cart</button>
     </div>
 
-    <div class="product" id="product3">
+    <div class="product" id="product4">
         <img src="images/Nike.jpg" alt="nike" onclick="openModal('images/Nike.jpg')">
         <span>Nike</span>
         <span>R600.00</span>
         <button onclick="addToCart('Nike', 600.00, 'images/Nike.jpg')">Add to Cart</button>
     </div>
 
-    <div class="product" id="product3">
+    <div class="product" id="product5">
       <img src="images/N.jpg" alt="nike" onclick="openModal('images/N.jpg')">
       <span>New Balance</span>
       <span>R850.00</span>
       <button onclick="addToCart('New Balance', 850.00, 'images/N.jpg')">Add to Cart</button>
     </div>
 
-    <div class="product" id="product3">
+    <div class="product" id="product6">
       <img src="images/Nw.jpg" alt="nike" onclick="openModal('images/Nw.jpg')">
       <span>Puma</span>
       <span>R900.00</span>
@@ -685,7 +734,7 @@
         <input type="password" id="password" name="password" placeholder="Enter your password" required>
       </div>
   
-      <div id="confiPassword">
+      <div id="confirmPassword">
         <label for="confirm-password">Confirm Password</label>
         <input type="password" id="confirmPassword" name="confirm-password" placeholder="Confirm your password" required>
       </div>
@@ -733,11 +782,11 @@
         <p></p>
       </div>
       <div>
-        <button onclick="filterProducts('Shoes')">Phones</button>
+        <button onclick="filterProducts('Phones')">Phones</button>
         <p></p>
       </div>
       <div>
-        <button onclick="filterProducts('Shoes')">Weaves</button>
+        <button onclick="filterProducts('Weaves')">Weaves</button>
         <p></p>
       </div>
       <!-- Add more categories as needed -->
@@ -834,85 +883,112 @@
     <div id="womenClothesSection" class="product-section" style="display: none;">
       <span id="closeWomenClothes" onclick="hideWomenClothesSection()">✖</span>
     
-      <div class="productCate" id="womenClothe1">
+      <div class="womenproduct" id="womenClothe1">
         <img src="images/Nike.jpg" alt="Women Clothes 1">
         <span>Women Clothes 1</span>
         <span>R250.00</span>
-        <button onclick="addToCart('Women Clothes 1', 250.00, 'images/women_clothes_1.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 1', 250.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
     
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe2">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
 
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe3">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
 
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe4">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
 
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe5">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
 
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe6">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
 
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe7">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
 
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe8">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
 
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe9">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
 
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe10">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
 
-      <div class="productCate" id="womenClothe2">
+      <div class="womenproduct" id="womenClothe11">
         <img src="images/Nike.jpg" alt="Women Clothes 2">
         <span>Women Clothes 2</span>
         <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/women_clothes_2.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
       </div>
     
       <!-- Add more women's clothes entries as needed -->
     </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="Contact">
+      <span id="closeContact" onclick="hideContact()">✖</span>
+        <form action="https://api.web3forms.com/submit" method="POST" class="contact-left">
+            <div class="contact-left-title">
+                <p>Got any website that need to be modified? 
+                    <br><strong>Get in touch.</strong></p>
+            </div>
+            <!--To recieve email, I use web3Forms-->
+            <input type="hidden" name="access_key" value="39c34991-519c-4246-ba71-72b53f5374f0">
+            <input type="text" name="name" placeholder="Your Name" class="contact-inputs" required>
+            <input type="text" name="email" placeholder="Your Email" class="contact-inputs" required>
+            <textarea name="message" placeholder="Your Message" class="contact-inputs" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <a href="mailto:ksandile127@gmail.com" class="footer__link">ksandile127@gmail.com</a>
+        <ul class="social-list">
+          <a class="social-list__link" href="https://www.linkedin.com/in/sandile-kitayi-6aa393275/">
+            <ion-icon name="logo-linkedin"></ion-icon>
+          </a>
+          <a class="social-list__link" href="https://github.com/ksandile?tab=repositories">
+            <ion-icon name="logo-github"></ion-icon>
+          </a>
+        </ul>
+    </footer>
+  
 
   <script>
     let cart = [];
@@ -1154,6 +1230,17 @@
       womenClothesSection.style.display = 'none';
     }
 
+    function showContactUs() {
+      var footer = document.querySelector('.footer');
+      footer.style.display = (footer.style.display === 'none' || footer.style.display === '') ? 'block' : 'none';
+    }
+    function hideContact() {
+      var footer = document.querySelector('.footer');
+      footer.style.display = 'none';
+    }
+
   </script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
