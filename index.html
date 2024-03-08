@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Store</title>
+  <style>
+        body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      position: relative;
+      display: flex;
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      height: 200px;
+    }
+
+    #headerVideo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    header h1 {
+      color: yellow;
+      font-size: 2em;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-left: 25px;
+      width: 100%;
+      background-color: #f2f2f2;
+    }
+
+    .product img {
+      width: 100%;
+      max-height: 250px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    .product {
+      background-color: rgb(141, 175, 164);
+      width: calc(33.33% - 20px); /* 33.33% width with 20px gap */
+      flex-grow: 0;
+      box-sizing: border-box;
+      margin-bottom: 0;
+      padding: 10px 10px;
+    }
+
+    .cart {
+      display: none;
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      top: 10px;
+      right: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      max-height: 500px;
+      z-index: 1000;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    #cartIcon {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: #333;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+      z-index: 1000;
+    }
+
+    #cartCount {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: red;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 50%;
+      font-size: 12px;
+    }
+
+    #closeCart {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #checkoutForm {
+      display: none;
+      width: 500px;
+      display: none;
+      position: fixed;
+      top: 100px;
+      right: 800px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+    }
+
+    #closeCheckout {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    label {
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    #cartList li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    #cartList img {
+      width: 150px; /* Adjust the image size in the cart as needed */
+      height: 90px; /* Adjust the image size in the cart as needed */
+      margin-right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    #navbar {
+      background-color: #333;
+      overflow: hidden;
+    }
+
+    #navbar a {
+      float: left;
+      border-radius: 10px;
+      background-color: beige;
+      display: block;
+      color: #333;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    #navbar button:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Media query for mobile devices */
+    @media only screen and (max-width: 600px) {
+      .container {
+        margin: 0;
+        padding: 10px; /* Adjusted padding for better spacing on mobile */
+      }
+
+      .product {
+        width: 100%; /* Full width for each product on mobile */
+      }
+      .cart-container {
+        display: block;
+      }
+      #cart {
+        display: block;
+        padding: 5px;
+        max-width: 80%;
+      }
+      #checkoutForm {
+        width: 80%;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+      #clearCart, #checkoutButton {
+        position: static;
+      }
+    }
+
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      max-width: 80%;
+      max-height: 80%;
+      overflow: hidden;
+    }
+
+    .modal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .cart-buttons-wrapper {
+      position: relative;
+
+    }
+
+    #checkoutButton {
+      position: absolute;
+      bottom: 10px;
+      background-color: #333;
+      padding: 10px;
+      z-index: 1;
+    }
+    #clearCart {
+      position: absolute;
+      top: 10px;
+      background-color: #f1f1f1;
+      padding: 10px;
+      z-index: 1;
+    }
+
+    #cart {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    h1, #searchBar {
+      display: inline-block;
+      margin-left: 25px;
+    }
+
+    #searchBar {
+      flex-grow: 1;
+      border-radius: 25px;
+      width: 800px;
+      height: 50px;
+      margin-top: 30px;
+      padding: 10px 10px 10px 30px;
+      background-color: antiquewhite;
+    }
+
+    #searchButton {
+      height: 50px;
+      background-color: antiquewhite;
+      border-radius: 25px;
+    }
+
+    #navbarlog {
+      background-color: #333;
+      overflow: hidden;
+      margin-bottom: 0px;
+      padding-bottom: 10px;
+    }
+    #navbarlog a {
+      float: left;
+      border-radius: 10px;
+      background-color: beige;
+      display: block;
+      color: #333;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    #narbarlog button:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    #cartIcon, #navbarlog {
+      display: flex;
+      align-items: center;
+    }
+
+    #signUp {
+      display: none;
+      width: 500px;
+      position: fixed;
+      top: 50%;
+      right: 16%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #login {
+      display: none;
+      width: 500px;
+      position: fixed;
+      top: 50%;
+      right: 16%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #login form {
+      display: flex;
+      flex-direction: column;
+    }
+    #closeLogIn {
+      cursor: pointer;
+    }
+    #login h2 {
+      margin-bottom: 15px;
+    }
+
+    #closeSignUp {
+      cursor: pointer;
+    }
+
+    #signUp form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #signUp h2 {
+      margin-bottom: 15px;
+    }
+
+    #signUp label {
+      margin-bottom: 5px;
+    }
+
+    #login label {
+      margin-bottom: 5px;
+    }
+
+    #signUp input {
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .forgotPasswordText {
+      display: block;
+      margin-top: 10px;
+      color: #007BFF;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .forgotPasswordText:hover {
+      text-decoration: underline;
+    }
+
+    #login input {
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    #signUp button {
+      background-color:#333;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #signUp button:hover {
+      background-color: #555;
+    }
+    .form-container {
+      display: none;
+    }
+
+    #categoryList {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 90%;
+      height: 90%;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      display: flex;
+      justify-content: center;
+      margin-top: 60px;
+      margin-left: 65px;
+      align-items: center;
+      z-index: 999; /* Set a high z-index to ensure it's on top of other elements */
+    }
+    #categoryList button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      padding: 15px;
+      font-size: 26px;
+    }
+    #categoryList button:hover {
+      background-color: #45a049;
+    }
+    #categoryList div {
+      text-align: center; /* Center the content within each div */
+    }
+    #closeCategory {
+      cursor: pointer;
+      font-size: 24px;
+      color: #fff;
+    }
+    #closeShoes {
+      color: #4caf50;
+      cursor: pointer;
+      font-size: 30px;
+      position: fixed;
+      top: 60px;
+      right: 25px;
+      z-index: 1000;
+    }
+
+    .product-section {
+      display: flex;
+      flex-wrap: wrap;
+      position: fixed;
+      top: 0;
+      left: 0;
+      gap: 3px;
+      margin: 20px 20px 20px 20px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+    .productCate {
+      background-color: rgb(141, 175, 164);
+      width: calc(33.33% - 20px); /* 33.33% width with 20px gap */
+      flex-grow: 0;
+      box-sizing: border-box;
+      margin-bottom: 0;
+      padding: 10px 10px;
+    }
+    .productCate img {
+      width: 100%;
+      max-height: 250px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+  </style>
+</head>
+<body>
+    <div id="navbar">
+        <button><a href="#" onclick="showHome()">Home</a></button>
+        <button><a href="#" onclick="showCategories()">Categories</a></button>
+        <button><a href="#" onclick="showNotification()">Notification</a></button>
+        <button><a href="#" onclick="showSettings()">Settings</a></button>
+        <button><a href="#" onclick="showSignUp()">Sign Up</a></button>
+        <button><a href="#" onclick="showLogin()">Login</a></button>
+      </div>
+  <header>
+    <video autoplay muted loop id="headerVideo">
+      <source src="images/AddVid.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <!-- Search bar-->
+    <div class="header-content">
+      <h1>WelCome to...<br>Sisi Ntosh Online Store</h1>
+
+      <div id="searchContainer">
+        <input type="text" id="searchBar" placeholder="Search your favourate items...">
+        <button id="searchButton" onclick="performSearch()">🔍</button>
+      </div>
+
+    </div>
+
+    <div id="cartIcon" onclick="toggleCart()">
+      🛒
+      <div id="cartCount">0</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="product" id="product1">
+      <img src="images/iPhone.jpg" alt="iPhone" onclick="openModal('images/iPhone.jpg')">
+      <span>iPhones</span>
+      <span>R8000</span>
+      <button onclick="addToCart('iPhone', 8000, 'images/iPhone.jpg')">Add to Cart</button>
+    </div>
+
+    <div class="product" id="product2">
+      <img src="images/watch.jpg" alt="Watch" onclick="openModal('images/watch.jpg')">
+      <span>Watch</span>
+      <span>R150.00</span>
+      <button onclick="addToCart('Watch', 150.00, 'images/watch.jpg')">Add to Cart</button>
+    </div>
+
+    <div class="product" id="product3">
+      <img src="images/sneaker.jpg" alt="adidas" onclick="openModal('images/sneaker.jpg')">
+      <span>Adidas</span>
+      <span>R700.00</span>
+      <button onclick="addToCart('Adidas', 700.00, 'images/sneaker.jpg')">Add to Cart</button>
+    </div>
+
+    <div class="product" id="product3">
+        <img src="images/Nike.jpg" alt="nike" onclick="openModal('images/Nike.jpg')">
+        <span>Nike</span>
+        <span>R600.00</span>
+        <button onclick="addToCart('Nike', 600.00, 'images/Nike.jpg')">Add to Cart</button>
+    </div>
+
+    <div class="product" id="product3">
+      <img src="images/N.jpg" alt="nike" onclick="openModal('images/N.jpg')">
+      <span>New Balance</span>
+      <span>R850.00</span>
+      <button onclick="addToCart('New Balance', 850.00, 'images/N.jpg')">Add to Cart</button>
+    </div>
+
+    <div class="product" id="product3">
+      <img src="images/Nw.jpg" alt="nike" onclick="openModal('images/Nw.jpg')">
+      <span>Puma</span>
+      <span>R900.00</span>
+      <button onclick="addToCart('Puma', 900.00, 'images/Nw.jpg')">Add to Cart</button>
+    </div>
+    <!--Cart section-->
+    <div class="cart" id="cart">
+      <span id="closeCart" onclick="toggleCart()">✖</span>
+      <h2>Shopping Cart</h2>
+      <ul id="cartList"></ul>
+      <p>Total: R<span id="total">0.00</span></p>
+      <div class="cart-buttons-wrapper">
+        <button onclick="clearCart()">Clear Cart</button>
+        <button onclick="showCheckoutForm()">Checkout</button>
+      </div>
+    </div>
+
+    <div id="checkoutForm">
+        <span id="closeCheckout" onclick="closeCheckoutForm()">✖</span>
+        <h1>Make Your Payment</h1>
+        <hr>
+        <h2>Enter Your Banking Details</h2>
+        <form>
+          <!-- Your banking details form fields go here -->
+          <label for="name">Full Names:</label>
+          <input type="text" id="yourName" name="name" placeholder="Your name              Surname" required>
+
+          <label for="cardNumber">Card Number:</label>
+          <input type="text" id="cardtNumber" name="cardNumber" placeholder="0000 0000 0000 0000" required>
+
+          <label for="expirationDate">Expiration Date:</label>
+          <input type="text" id="expirationDate" name="expirationDate" placeholder="MM/YYYY" required>
+          <label for="cvc">CVC:</label>
+          <input type="text" id="cvc" name="cvc" placeholder="CVC" required>
+  
+          <button type="button" onclick="processPayment()">Submit Payment</button>
+        </form>
+      </div>
+      <div class="modal" id="imageModal">
+        <div class="modal-content">
+          <img id="modalImage" src="" alt="Full View">
+        </div>
+        <button onclick="closeModal()">Close</button>
+      </div>
+  </div>
+  <!-- Sign up form-->
+  <div id="signUp" class="form-container">
+    <span id="closeSignUp" onclick="hideSignUp()">✖</span>
+    <h2>SignUp</h2>
+    <form>
+      <div id="nameContainer">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+  
+      <div id="surnameContainer">
+        <label for="surname">Surname</label>
+        <input type="text" id="surname" name="surname" placeholder="Enter your surname" required>
+      </div>
+
+      <div id="emailContainer">
+        <label for="email">Email-Address</label>
+        <input type="email" id="email" name="Email" placeholder="Enter your email" required>
+      </div>
+
+      <div id="idNoContainer">
+        <label for="idNo">ID No</label>
+        <input type="text" id="idNo" name="idNo" placeholder="Enter your ID No" required>
+      </div>
+  
+      <div id="passwordContainer">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+  
+      <div id="confiPassword">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirm-password" placeholder="Confirm your password" required>
+      </div>
+      <button id="submitBtn" type="submit" onclick="Submit()">Submit</button>
+    </form>
+  </div>
+
+    <!-- Login Form-->
+    <div id="login" class="logInContainer">
+      <span id="closeLogIn" onclick="hideLogin()">✖</span>
+      <h2 class="text-2xl font-semibold mb-6">Login</h2>
+      <form>
+        <div id="emailContainer">
+          <label for="email">Enter your email</label>
+          <input type="email" id="email" name="email" placeholder="Email address" required>
+        </div>
+    
+        <div id="passwordContainer">
+          <label for="password">Enter your password</label>
+          <input type="password" id="password" name="password" placeholder="Password" required>
+        </div>
+    
+        <button type="button" onclick="logInBtn()">Login</button>
+        <a href="#" id="forgotPassword" class="forgotPasswordText">Forgot password?</a>
+      </form>
+    </div>
+    <!-- List of categories-->
+    <div id="categoryList" style="display: none;">
+      <span id="closeCategory" onclick="hideCategory()">✖</span>
+      <div>
+        <button onclick="filterProducts('Electronics')">Electronics</button>
+        <p></p>
+      </div>
+      <div>
+        <button onclick="toggleClothingSubcategories()">Clothing</button>
+        <div id="clothingSubcategories" style="display: none;">
+          <button onclick="filterProducts('Women')">Women</button>
+          <button onclick="filterProducts('Men')">Men</button>
+          <button onclick="filterProducts('KidsGirls')">Kids (Girls)</button>
+          <button onclick="filterProducts('KidsBoys')">Kids (Boys)</button>
+        </div>
+      </div>
+      <div>
+        <button onclick="filterProducts('Shoes')">Shoes</button>
+        <p></p>
+      </div>
+      <div>
+        <button onclick="filterProducts('Shoes')">Phones</button>
+        <p></p>
+      </div>
+      <div>
+        <button onclick="filterProducts('Shoes')">Weaves</button>
+        <p></p>
+      </div>
+      <!-- Add more categories as needed -->
+    </div>
+
+    <!-- Add a new section for displaying Shoes -->
+    <div id="shoesSection" class="product-section" style="display: none;">
+      <span id="closeShoes" onclick="hideShoesSection()">✖</span>
+
+      <div id="filteredShoes" class="filtered-products"></div>
+
+
+      <div class="productCate" id="shoe1">
+        <img src="images/N.jpg" alt="Shoe 1">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('New Balance', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe2">
+        <img src="images/N.jpg" alt="Shoe 2">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 2', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe3">
+        <img src="images/N.jpg" alt="Shoe 3">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 3', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe4">
+        <img src="images/N.jpg" alt="Shoe 2">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 4', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe5">
+        <img src="images/N.jpg" alt="Shoe 2">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 5', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe6">
+        <img src="images/N.jpg" alt="Shoe 2">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 6', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe7">
+        <img src="images/N.jpg" alt="Shoe 2">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 7', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe8">
+        <img src="images/N.jpg" alt="Shoe 2">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 8', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe9">
+        <img src="images/N.jpg" alt="Shoe 2">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 9', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe10">
+        <img src="images/N.jpg" alt="Shoe 1">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 10', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <div class="productCate" id="shoe11">
+        <img src="images/N.jpg" alt="Shoe 2">
+        <span>Shoe 2</span>
+        <span>R300.00</span>
+        <button onclick="addToCart('Shoe 11', 300.00, 'images/N.jpg')">Add to Cart</button>
+      </div>
+
+      <!-- Add more shoes as needed -->
+    </div>
+  <script>
+    let cart = [];
+    let total = 0;
+
+    window.onload = function () {
+      const storedCart = localStorage.getItem('cart');
+      if (storedCart) {
+        cart = JSON.parse(storedCart);
+        updateCart();
+      }
+    };
+
+    function addToCart(productName, productPrice, productImage) {
+      cart.push({ name: productName, price: productPrice , image: productImage });
+      updateCart();
+      updateCartCount();
+      const cartContainer = document.getElementById('cart');
+      cartContainer.style.display = 'none';
+    }
+
+    function updateCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      const cartList = document.getElementById('cartList');
+      const totalElement = document.getElementById('total');
+      const cartCount = document.getElementById('cartCount');
+
+
+
+      cartList.innerHTML = '';
+
+      total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        const listItem = document.createElement('li');
+        const productImage = document.createElement('img');
+        productImage.src = item.image;
+        productImage.alt = item.name;
+        listItem.appendChild(productImage);
+        listItem.innerHTML += `${item.name} - R${item.price.toFixed(2)}`;
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.onclick = () => removeItem(index);
+
+        listItem.appendChild(removeButton);
+        cartList.appendChild(listItem);
+      });
+
+      totalElement.textContent = total.toFixed(2);
+      cartCount.textContent = cart.length;
+
+      const cartContainer = document.getElementById('cart');
+      cartContainer.style.display = cart.length > 0 ? 'block' : 'none';
+    }
+
+    function updateCartCount() {
+      const cartCount = document.getElementById('cartCount');
+      cartCount.textContent = cart.length;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+      updateCartCount();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCart();
+      updateCartCount();
+    }
+
+    function toggleCart() {
+      const cartContainer = document.getElementById('cart');
+      cartContainer.style.display = cartContainer.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function showCheckoutForm() {
+      const checkoutForm = document.getElementById('checkoutForm');
+      checkoutForm.style.display = 'block';
+    }
+
+    function closeCheckoutForm() {
+      const checkoutForm = document.getElementById('checkoutForm');
+      checkoutForm.style.display = 'none';
+    }
+
+    function processPayment() {
+      alert('Payment processed successfully!, Thank you for shopping with Sisi Ntosh!');
+      closeCheckoutForm();
+    }
+
+    function toggleCheckoutForm() {
+      var checkoutForm = document.querySelector('.checkoutForm');
+      checkoutForm.style.display = checkoutForm.style.display === 'flex' ? 'none': 'flex';
+    }
+
+    function hideCheckoutForm() {
+      document.querySelector('.checkoutForm').style.display = 'none';
+    }
+
+    function openModal(imageSrc) {
+      var modal = document.getElementById('imageModal');
+      var modalImage = document.getElementById('modalImage');
+      modalImage.src = imageSrc;
+      modal.style.display = 'flex';
+
+      // Add a click event listener to the modal image to close the modal
+      modalImage.addEventListener('click', closeModal);
+    }
+
+    function closeModal() {
+      var modal = document.getElementById('imageModal');
+      var modalImage = document.getElementById('modalImage');
+
+      // Remove the click event listener to prevent multiple listeners
+      modalImage.removeEventListener('click', closeModal);
+
+      // Reset the image source
+      modalImage.src = '';
+
+      // Hide the modal
+      modal.style.display = 'none';
+    }
+
+    function showSignUp() {
+      const signUpForm = document.getElementById('signUp');
+      signUpForm.style.display = 'block';
+    }
+
+    function hideSignUp() {
+      const signUpForm = document.getElementById('signUp');
+      signUpForm.style.display = 'none';
+    }
+
+    function showLogin() {
+      const loginForm = document.getElementById('login');
+      loginForm.style.display = 'block';
+    }
+
+    function hideLogin() {
+      const loginForm = document.getElementById('login');
+      loginForm.style.display = 'none';
+    }
+
+    const headerVideo = document.getElementById('headerVideo');
+
+    // Restart the video when it ends
+    headerVideo.addEventListener('ended', () => {
+      headerVideo.currentTime = 0;
+      headerVideo.play();
+    });
+
+    function showCategories() {
+      const categoryList = document.getElementById('categoryList');
+      const navbar = document.getElementById('navbar');
+
+      // Toggle the display of the category list
+      categoryList.style.display = categoryList.style.display === 'none' ? 'block' : 'none';
+
+      // Hide other sections if they are visible
+      hideSections(['home', 'notification', 'settings', 'signUp', 'login']);
+
+      // You can add additional logic here based on your requirements
+    }
+
+      // Function to hide other sections when one is clicked
+    function hideSections(sectionIds) {
+      sectionIds.forEach((id) => {
+      const section = document.getElementById(id);
+          if (section) {
+          section.style.display = 'none';
+        }
+      });
+    }
+
+    function filterProducts(category) {
+      // ... (your existing code)
+
+      // Additional logic for displaying items based on category
+      if (category === 'Shoes') {
+        showShoesSection();
+      }
+    }
+
+    function showShoesSection() {
+      const shoesSection = document.getElementById('shoesSection');
+      shoesSection.style.display = 'flex';
+    }
+
+    function hideShoesSection() {
+      const shoesSection = document.getElementById('shoesSection');
+      shoesSection.style.display = 'none';
+    }
+
+    function hideCategory() {
+      var categoryList = document.getElementById('categoryList');
+      categoryList.style.display = 'none';
+    }
+    function toggleClothingSubcategories() {
+      var clothingSubcategories = document.getElementById('clothingSubcategories');
+      clothingSubcategories.style.display = (clothingSubcategories.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function performSearch() {
+      var searchTerm = document.getElementById('searchBar').value.toLowerCase();
+      var filteredShoesContainer = document.getElementById('filteredShoes');
+      var shoesSection = document.getElementById('shoesSection');
+  
+      // Clear previous results
+      filteredShoesContainer.innerHTML = '';
+
+      // Loop through your products and add matching ones to the filtered container
+      var products = document.querySelectorAll('#shoesSection .productCate');
+      products.forEach(function (product) {
+        var productName = product.querySelector('span').textContent.toLowerCase();
+        if (productName.includes(searchTerm)) {
+          filteredShoesContainer.appendChild(product.cloneNode(true));
+        }
+      });
+
+      // Show the filtered container
+      filteredShoesContainer.style.display = 'block';
+
+      // Hide the shoes section if there are no matching results
+      shoesSection.style.display = (filteredShoesContainer.children.length > 0) ? 'none' : 'block';
+    }
+
+
+  </script>
+</body>
+</html>
