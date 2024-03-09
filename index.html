@@ -491,12 +491,16 @@
     #womenClothesSection {
       display: flex;
       flex-wrap: wrap;
+      position: fixed;
+      top: 0;
+      left: 0;
       gap: 3px;
-      margin-left: 25px;
+      margin: 20px 20px 20px 20px;
       width: 100%;
-      background-color: #f2f2f2;
+      background-color: rgba(0, 0, 0, 0.5);
       z-index: 999;
       overflow-y: auto;
+      max-height: 100vh;
     }
 
     #womenClothesSection .womenproduct {
@@ -527,6 +531,47 @@
     }
     #closeWomenClothes:hover {
        color: red;
+    }
+
+    .menProduct-section {
+      display: flex;
+      flex-wrap: wrap;
+      position: fixed;
+      top: 0;
+      left: 0;
+      gap: 3px;
+      margin: 20px 20px 20px 20px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      overflow-y: auto;
+    }
+    .menproduct {
+      background-color: rgb(141, 175, 164);
+      width: calc(33.33% - 20px); /* 33.33% width with 20px gap */
+      flex-grow: 0;
+      box-sizing: border-box;
+      margin-bottom: 0;
+      padding: 10px 10px;
+    }
+    #menClothesSection .menproduct img {
+      width: 100%;
+      max-height: 250px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      object-fit: cover;
+    }
+    #closeMenClothes {
+      color: #4caf50;
+      cursor: pointer;
+      font-size: 30px;
+      position: fixed;
+      top: 60px;
+      right: 25px;
+      z-index: 1000;
+    }
+    #closeMenClothes:hover {
+      color: red;
     }
 
     .footer {
@@ -772,7 +817,7 @@
         <button onclick="toggleClothingSubcategories()">Clothing</button>
         <div id="clothingSubcategories" style="display: none;">
           <button onclick="toggleWomenClothesSection()">Women</button>
-          <button onclick="filterProducts('Men')">Men</button>
+          <button onclick="toggleMenClothesSection()">Men</button>
           <button onclick="filterProducts('KidsGirls')">Kids (Girls)</button>
           <button onclick="filterProducts('KidsBoys')">Kids (Boys)</button>
         </div>
@@ -880,7 +925,7 @@
     </div>
 
     <!-- Add a new section for displaying women's clothes -->
-    <div id="womenClothesSection" class="product-section" style="display: none;">
+    <div id="womenClothesSection" class=womenProduct-section" style="display: none;">
       <span id="closeWomenClothes" onclick="hideWomenClothesSection()">✖</span>
     
       <div class="womenproduct" id="womenClothe1">
@@ -962,6 +1007,90 @@
     
       <!-- Add more women's clothes entries as needed -->
     </div>
+
+        <!-- Add a new section for displaying men clothes -->
+        <div id="menClothesSection" class="menProduct-section" style="display: none;">
+          <span id="closeMenClothes" onclick="hideMenClothesSection()">✖</span>
+        
+          <div class="menproduct" id="MenClothe1">
+            <img src="images/Nike.jpg" alt="men Clothes 1">
+            <span>Men Clothes 1</span>
+            <span>R250.00</span>
+            <button onclick="addToCart('men Clothes 1', 250.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+        
+          <div class="menproduct" id="MenClothe2">
+            <img src="images/Nike.jpg" alt="Men Clothes 2">
+            <span>Men Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+    
+          <div class="menproduct" id="MenClothe3">
+            <img src="images/Nike.jpg" alt="men Clothes 2">
+            <span>Men Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+    
+          <div class="menproduct" id="MenClothe4">
+            <img src="images/Nike.jpg" alt="men Clothes 2">
+            <span>Women Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+    
+          <div class="menproduct" id="MenClothe5">
+            <img src="images/Nike.jpg" alt="men Clothes 2">
+            <span>Men Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+    
+          <div class="menproduct" id="MenClothe6">
+            <img src="images/Nike.jpg" alt="men Clothes 2">
+            <span>Men Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+    
+          <div class="menproduct" id="womenClothe7">
+            <img src="images/Nike.jpg" alt="Women Clothes 2">
+            <span>Men Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+    
+          <div class="menproduct" id="MenClothe8">
+            <img src="images/Nike.jpg" alt="men Clothes 2">
+            <span>Men Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+    
+          <div class="menproduct" id="MenClothe9">
+            <img src="images/Nike.jpg" alt="men Clothes 2">
+            <span>Men Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+    
+          <div class="menproduct" id="MenClothe10">
+            <img src="images/Nike.jpg" alt="Women Clothes 2">
+            <span>Men Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+    
+          <div class="menproduct" id="MenClothe11">
+            <img src="images/Nike.jpg" alt="Women Clothes 2">
+            <span>Men Clothes 2</span>
+            <span>R300.00</span>
+            <button onclick="addToCart('men Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+          </div>
+        
+          <!-- Add more women's clothes entries as needed -->
+        </div>
 
     <!-- Footer -->
     <footer class="footer" id="Contact">
@@ -1237,6 +1366,16 @@
     function hideContact() {
       var footer = document.querySelector('.footer');
       footer.style.display = 'none';
+    }
+     // When "Men button" is clicked, the product of men will appear
+    function toggleMenClothesSection() {
+      var menClothesSection = document.getElementById('menClothesSection');
+      menClothesSection.style.display = (menClothesSection.style.display === 'none' || menClothesSection.style.display === '') ? 'block' : 'none';
+    }
+    // When "X icon" is clicked, the men pruducts will hide
+    function hideMenClothesSection() {
+      var menClothesSection = document.getElementById('menClothesSection');
+      menClothesSection.style.display = 'none';
     }
 
   </script>
