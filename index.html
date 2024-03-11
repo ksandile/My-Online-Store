@@ -10,6 +10,7 @@
        margin: 0;
       padding: 0;
       background-color: #f4f4f4;
+      overflow-x: hidden;
     }
 
     header {
@@ -56,11 +57,11 @@
     }
 
     .product {
-      background-color: rgb(141, 175, 164);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       width: calc(33.33% - 20px); /* 33.33% width with 20px gap */
       flex-grow: 0;
       box-sizing: border-box;
-      margin-bottom: 0;
+      margin-bottom: 10px;
       padding: 10px 10px;
     }
 
@@ -416,13 +417,13 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 90%;
+      width: 100%;
       height: 90%;
-      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      background-color: rgba(0, 0, 0, 0.5);
       display: flex;
       justify-content: center;
       margin-top: 60px;
-      margin-left: 65px;
+      margin-left: 0;
       align-items: center;
       z-index: 999; /* Set a high z-index to ensure it's on top of other elements */
     }
@@ -430,6 +431,7 @@
       background-color: #4caf50;
       color: #fff;
       padding: 10px;
+      width: 300px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
@@ -488,14 +490,15 @@
       object-fit: cover;
     }
 
-    #womenClothesSection {
-      display: flex;
-      flex-wrap: wrap;
+    .womenProduct-section {
+      /* display: flex;
+      flex-direction: row;
+      
+      flex-wrap: wrap; */
       position: fixed;
       top: 0;
       left: 0;
       gap: 3px;
-      margin: 20px 20px 20px 20px;
       width: 100%;
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 999;
@@ -503,21 +506,29 @@
       max-height: 100vh;
     }
 
-    #womenClothesSection .womenproduct {
-      background-color: rgb(141, 175, 164);
-      width: calc(33.33% - 20px); /* 33.33% width with 20px gap */
-      flex-grow: 0;
-      box-sizing: border-box;
+    .womenproduct {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: ;
+      align-items: center;
+      width:90%;
       margin-bottom: 0;
       padding: 10px 10px;
+      gap: 20px;
+      margin-left: 25px;
+      margin-bottom: 50px;
     }
 
-    #womenClothesSection .womenproduct img {
+    .womenproduct img {
       width: 100%;
       max-height: 250px;
       border: 1px solid #ddd;
-      border-radius: 25px;
+      border-radius: 10px;
       object-fit: cover;
+    }
+    .women {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     #closeWomenClothes {
@@ -633,6 +644,17 @@
       color: red;
     }
 
+    .add-cart-icon {
+      font-size: 30px;
+      margin-left: 20px;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    .add-cart-icon:hover {
+      color: grey;
+    }
+
   </style>
 </head>
 <body>
@@ -672,7 +694,7 @@
       <img src="images/iPhone.jpg" alt="iPhone" onclick="openModal('images/iPhone.jpg')">
       <span>iPhones</span>
       <span>R8000</span>
-      <button onclick="addToCart('iPhone', 8000, 'images/iPhone.jpg')">Add to Cart</button>
+      <ion-icon class="add-cart-icon" name="cart-outline" onclick="addToCart('iPhone', 8000, 'images/iPhone.jpg')"></ion-icon>
     </div>
 
     <div class="product" id="product2">
@@ -841,7 +863,7 @@
     <div id="shoesSection" class="product-section" style="display: none;">
       <span id="closeShoes" onclick="hideShoesSection()">✖</span>
 
-      <div id="filteredShoes" class="filtered-products"></div>
+      
 
 
       <div class="productCate" id="shoe1">
@@ -925,84 +947,81 @@
     </div>
 
     <!-- Add a new section for displaying women's clothes -->
-    <div id="womenClothesSection" class=womenProduct-section" style="display: none;">
+    <div id="womenClothesSection" class="womenProduct-section" style="display: none;">
       <span id="closeWomenClothes" onclick="hideWomenClothesSection()">✖</span>
+
+      <div class="womenproduct" id="filteredWomenClothes">
+
+        <div id="womenClothe1" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 1">
+          <span>Women Clothes 1</span>
+          <span>R250.00</span>
+          <button onclick="addToCart('Women Clothes 1', 250.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
+
+        <div id="womenClothe2" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 2">
+          <span>Women Clothes 2</span>
+          <span>R300.00</span>
+          <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
+
+        <div id="womenClothe3" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 2">
+          <span>Women Clothes 2</span>
+          <span>R300.00</span>
+          <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
+
     
-      <div class="womenproduct" id="womenClothe1">
-        <img src="images/Nike.jpg" alt="Women Clothes 1">
-        <span>Women Clothes 1</span>
-        <span>R250.00</span>
-        <button onclick="addToCart('Women Clothes 1', 250.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
-    
-      <div class="womenproduct" id="womenClothe2">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
+        <div id="womenClothe4" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 2">
+          <span>Women Clothes 2</span>
+          <span>R300.00</span>
+          <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
 
-      <div class="womenproduct" id="womenClothe3">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
-
-      <div class="womenproduct" id="womenClothe4">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
-
-      <div class="womenproduct" id="womenClothe5">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
-
-      <div class="womenproduct" id="womenClothe6">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
-
-      <div class="womenproduct" id="womenClothe7">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
-
-      <div class="womenproduct" id="womenClothe8">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
-
-      <div class="womenproduct" id="womenClothe9">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
-
-      <div class="womenproduct" id="womenClothe10">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
-      </div>
-
-      <div class="womenproduct" id="womenClothe11">
-        <img src="images/Nike.jpg" alt="Women Clothes 2">
-        <span>Women Clothes 2</span>
-        <span>R300.00</span>
-        <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        <div id="womenClothe5" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 2">
+          <span>Women Clothes 2</span>
+          <span>R300.00</span>
+          <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
+        
+        <div id="womenClothe6" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 2">
+          <span>Women Clothes 2</span>
+          <span>R300.00</span>
+          <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
+  
+        <div id="womenClothe7" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 2">
+          <span>Women Clothes 2</span>
+          <span>R300.00</span>
+          <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
+  
+        <div id="womenClothe8" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 2">
+          <span>Women Clothes 2</span>
+          <span>R300.00</span>
+          <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
+  
+        <div id="womenClothe9" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 2">
+          <span>Women Clothes 2</span>
+          <span>R300.00</span>
+          <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
+  
+        <div id="womenClothe10" class="women">
+          <img src="images/Nike.jpg" alt="Women Clothes 2">
+          <span>Women Clothes 2</span>
+          <span>R300.00</span>
+          <button onclick="addToCart('Women Clothes 2', 300.00, 'images/Nike.jpg')">Add to Cart</button>
+        </div>
       </div>
     
       <!-- Add more women's clothes entries as needed -->
