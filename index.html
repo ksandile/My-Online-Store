@@ -649,11 +649,81 @@
       margin-left: 20px;
       cursor: pointer;
       position: absolute;
+      padding-left: 50px;
+    }
+    .add-favorite-icon {
+      font-size: 30px;
+      padding-left: 30px;
     }
 
     .add-cart-icon:hover {
       color: grey;
     }
+    .add-favorite-icon:hover {
+      color: red;
+    }
+
+    .favorite {
+      position: fixed;
+      top: 50px; /* Adjust top position as needed */
+      right: 10px;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: none; /* Initially hide the favorite section */
+      z-index: 1000;
+      width: 400px;
+      height: 400px;
+      overflow-y: auto;
+    }
+    .favorite ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .favorite.show {
+      display: block; /* Show the favorite section when toggled */
+    }
+
+    #closeFavorite {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+    }
+
+    #heartIcon {
+      position: fixed;
+      top: -120px; /* Adjust the distance from the top */
+      right: -80px; /* Adjust the distance from the right */
+      left: 250px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    #heartIcon {
+      position: relative;
+      z-index: 1000;
+    }
+    #favoriteCount {
+      position: absolute;
+      top: -8px; /* Adjust vertical position */
+      right: -8px; /* Adjust horizontal position */
+      background-color: red; /* Customize count background color */
+      color: white; /* Customize count text color */
+      font-size: 10px; /* Customize count font size */
+      padding: 3px 6px; /* Adjust padding */
+      border-radius: 50%; /* Make it circular */
+    }
+    .heart {
+      font-size: 50px;
+      z-index: 1000;
+    }
+
+    #heartIcon .heart {
+      color: white; /* Set the color of the heart icon to white */
+    }
+
 
   </style>
 </head>
@@ -673,20 +743,25 @@
       Your browser does not support the video tag.
     </video>
     <!-- Search bar-->
-    <div class="header-content">
+    <di class="header-content">
       <h1>WelCome to...<br>Sisi Ntosh Online Store</h1>
 
       <div id="searchContainer">
         <input type="text" id="searchBar" placeholder="Search your favourate items...">
         <button id="searchButton" onclick="performSearch()">🔍</button>
       </div>
-
-    </div>
-
-    <div id="cartIcon" onclick="toggleCart()">
-      🛒
-      <div id="cartCount">0</div>
-    </div>
+    </di>
+      <!-- Cart Icon -->
+      <div id="cartIcon" onclick="toggleCart()">
+        🛒
+        <!-- Add cart count here if needed -->
+        <div id="cartCount">0</div>
+      </div>
+      <!-- Heart Icon -->
+      <div id="heartIcon" onclick="toggleFavoriteSection()">
+        <ion-icon name="heart-outline" id="heartIcon" class="heart"></ion-icon>
+        <div id="favoriteCount">0</div>
+      </div>
   </header>
 
   <div class="container">
@@ -695,41 +770,47 @@
       <span>iPhones</span>
       <span>R8000</span>
       <ion-icon class="add-cart-icon" name="cart-outline" onclick="addToCart('iPhone', 8000, 'images/iPhone.jpg')"></ion-icon>
+      <ion-icon class="add-favorite-icon" name="heart-outline" onclick="addToFavorite('iPhone', 8000, 'images/iPhone.jpg')"></ion-icon>
     </div>
 
     <div class="product" id="product2">
       <img src="images/watch.jpg" alt="Watch" onclick="openModal('images/watch.jpg')">
       <span>Watch</span>
       <span>R150.00</span>
-      <button onclick="addToCart('Watch', 150.00, 'images/watch.jpg')">Add to Cart</button>
+      <ion-icon class="add-cart-icon" name="cart-outline" onclick="addToCart('Watch', 150, 'images/watch.jpg')"></ion-icon>
+      <ion-icon class="add-favorite-icon" name="heart-outline" onclick="addToFavorite('Watch', 150, 'images/watch.jpg')"></ion-icon>
     </div>
 
     <div class="product" id="product3">
       <img src="images/sneaker.jpg" alt="adidas" onclick="openModal('images/sneaker.jpg')">
       <span>Adidas</span>
       <span>R700.00</span>
-      <button onclick="addToCart('Adidas', 700.00, 'images/sneaker.jpg')">Add to Cart</button>
+      <ion-icon class="add-cart-icon" name="cart-outline" onclick="addToCart('Adidas', 700, 'images/sneaker.jpg')"></ion-icon>
+      <ion-icon class="add-favorite-icon" name="heart-outline" onclick="addToFavorite('Adidas', 700, 'images/sneaker.jpg')"></ion-icon>
     </div>
 
     <div class="product" id="product4">
         <img src="images/Nike.jpg" alt="nike" onclick="openModal('images/Nike.jpg')">
         <span>Nike</span>
         <span>R600.00</span>
-        <button onclick="addToCart('Nike', 600.00, 'images/Nike.jpg')">Add To Cart</button>
+        <ion-icon class="add-cart-icon" name="cart-outline" onclick="addToCart('Nike', 600, 'images/Nike.jpg')"></ion-icon>
+        <ion-icon class="add-favorite-icon" name="heart-outline" onclick="addToFavorite('Nike', 8000, 'images/Nike.jpg')"></ion-icon>
     </div>
 
     <div class="product" id="product5">
       <img src="images/N.jpg" alt="nike" onclick="openModal('images/N.jpg')">
       <span>New Balance</span>
       <span>R850.00</span>
-      <button onclick="addToCart('New Balance', 850.00, 'images/N.jpg')">Add to Cart</button>
+      <ion-icon class="add-cart-icon" name="cart-outline" onclick="addToCart('New Balance', 850, 'images/N.jpg')"></ion-icon>
+      <ion-icon class="add-favorite-icon" name="heart-outline" onclick="addToFavorite('New Balance', 850, 'images/N.jpg')"></ion-icon>
     </div>
 
     <div class="product" id="product6">
       <img src="images/Nw.jpg" alt="nike" onclick="openModal('images/Nw.jpg')">
       <span>Puma</span>
       <span>R900.00</span>
-      <button onclick="addToCart('Puma', 900.00, 'images/Nw.jpg')">Add to Cart</button>
+      <ion-icon class="add-cart-icon" name="cart-outline" onclick="addToCart('Puma', 900, 'images/Nw.jpg')"></ion-icon>
+      <ion-icon class="add-favorite-icon" name="heart-outline" onclick="addToFavorite('Puma', 900, 'images/Nw.jpg')"></ion-icon>
     </div>
     <!--Cart section-->
     <div class="cart" id="cart">
@@ -740,6 +821,16 @@
       <div class="cart-buttons-wrapper">
         <button onclick="clearCart()">Clear Cart</button>
         <button onclick="showCheckoutForm()">Checkout</button>
+      </div>
+    </div>
+
+    <!-- Add to favorite -->
+    <div class="favorite" id="heartSection">
+      <span id="closeFavorite" onclick="toggleFavorite()">✖</span>
+      <h2>Favorite Items</h2>
+      <ul id="favoriteList"></ul>
+      <div class="favorite-buttons-wrapper">
+        <button onclick="clearFavorite()">Clear Favorite</button>
       </div>
     </div>
 
@@ -1396,6 +1487,90 @@
       var menClothesSection = document.getElementById('menClothesSection');
       menClothesSection.style.display = 'none';
     }
+
+    function addToFavorite(name, price, image) {
+    var favoriteList = document.getElementById('favoriteList');
+    
+    // Create li element to hold the item
+    var listItem = document.createElement('li');
+    
+    // Create image element
+    var img = document.createElement('img');
+    img.src = image;
+    img.alt = name;
+    listItem.appendChild(img);
+    
+    // Create span elements for name and price
+    var nameSpan = document.createElement('span');
+    nameSpan.textContent = name;
+    listItem.appendChild(nameSpan);
+    
+    var priceSpan = document.createElement('span');
+    priceSpan.textContent = 'Price: ' + price;
+    listItem.appendChild(priceSpan);
+    
+    favoriteList.appendChild(listItem);
+  }
+
+  // Load favorite items from local storage on page load
+  window.onload = function() {
+    loadFavoriteItems();
+    updateFavoriteCount();
+  };
+
+  function addToFavorite(name, price, image) {
+    // Add item to favorite list
+    var favoriteItem = { name: name, price: price, image: image };
+    var favoriteItems = JSON.parse(localStorage.getItem('favoriteItems')) || [];
+    favoriteItems.push(favoriteItem);
+    localStorage.setItem('favoriteItems', JSON.stringify(favoriteItems));
+
+    // Update favorite list display
+    updateFavoriteList();
+    updateFavoriteCount();
+  }
+
+  function loadFavoriteItems() {
+    var favoriteItems = JSON.parse(localStorage.getItem('favoriteItems')) || [];
+    favoriteItems.forEach(function(item) {
+        addToFavorite(item.name, item.price, item.image);
+    });
+  }
+
+  function updateFavoriteList() {
+    var favoriteList = document.getElementById('favoriteList');
+    favoriteList.innerHTML = ''; // Clear the list first
+
+    var favoriteItems = JSON.parse(localStorage.getItem('favoriteItems')) || [];
+    favoriteItems.forEach(function(item) {
+        var listItem = document.createElement('li');
+        listItem.innerHTML = `<img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;"> <span>${item.name} - Price: R${item.price}</span>`;
+        favoriteList.appendChild(listItem);
+    });
+  }
+
+  function updateFavoriteCount() {
+    var favoriteCount = document.getElementById('favoriteCount');
+    var favoriteItems = JSON.parse(localStorage.getItem('favoriteItems')) || [];
+    favoriteCount.textContent = `(${favoriteItems.length})`;
+  }
+
+  function clearFavorite() {
+    localStorage.removeItem('favoriteItems');
+    updateFavoriteCount();
+    updateFavoriteList();
+  }
+
+  //Show favorite
+  function toggleFavoriteSection() {
+    var favoriteSection = document.getElementById('heartSection');
+    favoriteSection.classList.toggle('show');
+  }
+
+  function toggleFavorite() {
+    var favoriteSection = document.getElementById("heartSection");
+    favoriteSection.style.display = (favoriteSection.style.display === "none") ? "block" : "none";
+  }
 
   </script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
