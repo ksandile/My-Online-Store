@@ -21,7 +21,7 @@ Welcome to the Online Clothing Shop! This is a simple e-commerce website built u
 
 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/your-username/online-clothing-shop.git
+   git clone https://github.com/ksandile/My-Online-Store.git
    ```
 
 2. Navigate to the project folder:
