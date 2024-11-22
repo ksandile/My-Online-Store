@@ -26,7 +26,7 @@ Welcome to the Online Clothing Shop! This is a simple e-commerce website built u
 
 2. Navigate to the project folder:
    ```bash
-   cd online-clothing-shop
+   cd My-Online-Store
    ```
 
 3. Open the `index.html` file in your browser to view the website.
